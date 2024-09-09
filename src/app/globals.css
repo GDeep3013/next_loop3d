@@ -1,27 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500&family=Poppins:wght@400&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.building-peak .slick-slider .slick-list {
+  margin: 0 -36px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.building-peak .slick-slider .slick-list .slick-slide {
+  padding: 0 36px;
+}
+
+.slick-slider button.slick-arrow::before {
+  content: none;
+}
+
+.slick-slider button.slick-arrow {
+  width: 60px;
+  height: 60px;
+}
+
+.slick-slider button.slick-arrow.slick-prev {
+  left: 50px;
+  background: url('/images/arrow-prev.svg') no-repeat;
+}
+
+.slick-slider button.slick-arrow.slick-next {
+  right: 50px;
+  background: url('/images/arrow-next.svg') no-repeat;
+}
+
+@media screen and (min-width:1025px) and (max-width:1200px) {
+  .slick-slider button.slick-arrow.slick-prev {
+    left: 30px;
+    background: url('/images/arrow-prev.svg') no-repeat;
+  }
+
+  .slick-slider button.slick-arrow.slick-next {
+    right: 30px;
+    background: url('/images/arrow-next.svg') no-repeat;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@media screen and (min-width:768px) and (max-width:1024px) {
+  .slick-slider button.slick-arrow {
+    width: 50px;
+    height: 50px;
+    background-size: cover !important;
+  }
+
+  .slick-slider button.slick-arrow.slick-prev {
+    left: 26px;
+  }
+
+  .slick-slider button.slick-arrow.slick-next {
+    right: 26px;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@media screen and (max-width:767px) {
+  .slick-slider button.slick-arrow {
+    width: 40px;
+    height: 40px;
+    background-size: cover !important;
+  }
+
+  .slick-slider button.slick-arrow.slick-prev {
+    left: -45px;
+  }
+
+  .slick-slider button.slick-arrow.slick-next {
+    right: -45px;
   }
 }
