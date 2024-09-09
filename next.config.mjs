@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {
-        customKey: 'my-value',
+        NEXT_PUBLIC_API_BASE_URL: "http://localhost:8080",
+        NEXT_PUBLIC_API_KEY: "3r3sf%TH*&HSS$^(JD(#&4h49hdcKde3d",
     },
 };
 

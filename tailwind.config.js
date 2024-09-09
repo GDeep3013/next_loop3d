@@ -29,6 +29,9 @@ export default {
       height: {
         'custom-height': 'calc(100vh - 56px)',
       },
+      filter: {
+        'custom-filter': 'invert(1)',
+      },
     },
   },
   plugins: [],

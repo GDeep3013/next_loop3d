@@ -1,40 +1,13 @@
 'use client'
-import React,{useEffect , useState} from 'react'
+import React, { useEffect, useState } from 'react';
 import InputField from "../components/common/InputField";
-import { useSearchParams } from 'next/navigation';
-import config from '../config'
-export default function StartSurveyFrom() {
+import { useSearchParams,useRouter   } from 'next/navigation';
+import Container from "../components/common/Container";
+
+export default function StartSurveyForm() {
+    const router = useRouter()
     const searchParams = useSearchParams();
     const token = searchParams.get('token');
-    console.log('token',token,config)
-    const individualOptions = [
-        "Accountability",
-        "Builds Relationships",
-        "Customer Oriented",
-        "Drives Results",
-        "Effective Communication",
-        "Problem Solving And Decision Making",
-        "Strategic Agility",
-        "Synergy",
-        "Technical & Business Acumen",
-    ];
-
-    const managerOptions = [
-        "Accountability",
-        "Coaches And Develops",
-        "Customer Oriented",
-        "Drives Results",
-        "Effective Communication",
-        "Emotional Intelligence",
-        "Encourages Innovation",
-        "Motivation and Recognition",
-        "Prioritizing and Aligning",
-        "Problem Solving And Decision Making",
-        "Strategic Agility",
-        "Synergy",
-        "Visionary Thinking",
-    ];
-
     const [activeTab, setActiveTab] = useState("individual_contributor");
     const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
     const [formData, setFormData] = useState({
@@ -43,22 +16,61 @@ export default function StartSurveyFrom() {
     });
     const [errorMessage, setErrorMessage] = useState("");
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+    const [assignments, setAssignments] = useState({
+        individual_contributor: [],
+        people_manager: []
+    });
 
-    const handleCheckboxChange = (label) => {
-        if (selectedCheckboxes.includes(label)) {
-            setSelectedCheckboxes(selectedCheckboxes.filter((item) => item !== label));
+    const handleCheckboxChange = (label, id) => {
+        if (selectedCheckboxes.includes(id)) {
+            setSelectedCheckboxes(selectedCheckboxes.filter((item) => item !== id));
         } else {
             if (selectedCheckboxes.length < 3) {
-                setSelectedCheckboxes([...selectedCheckboxes, label]);
+                setSelectedCheckboxes([...selectedCheckboxes, id]);
             }
         }
     };
 
+    const getAssignments = async (userId) => {
+        try {
+            const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/competencies/assign?user_id=${userId}`;
+            const response = await fetch(url, {
+                headers: { 'x-api-key': process.env.NEXT_PUBLIC_API_KEY }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                const categorizedAssignments = {
+                    individual_contributor: [],
+                    people_manager: []
+                };
+                data?.assignments.forEach((assignment) => {
+                    if (assignment?.category_id?.competency_type in categorizedAssignments) {
+                        categorizedAssignments[assignment?.category_id?.competency_type].push({
+                            name: assignment?.category_id?.category_name,
+                            id: assignment?.category_id?._id // Assuming `category_id` is the competency ID
+                        });
+                    }
+                });
+                return categorizedAssignments;
+            } else {
+                console.error('Failed to fetch assignments');
+                return false;
+            }
+        } catch (error) {
+            console.error('Error fetching assignments:', error);
+            return false;
+        }
+    };
 
     useEffect(() => {
-        
-
-    },[]);
+        const fetchAssignments = async () => {
+            const assignments = await getAssignments(token);
+            if (assignments) {
+                setAssignments(assignments);
+            }
+        };
+        fetchAssignments();
+    }, [token]);
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
@@ -70,7 +82,7 @@ export default function StartSurveyFrom() {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Validation: Check if all fields are filled
@@ -79,37 +91,61 @@ export default function StartSurveyFrom() {
             return;
         }
 
-        // try {
-        //   const response = await startSurvay(payload);
-        //   console.log("Form submitted successfully:", response);
-        // } catch (error) {
-        //   console.error("Error submitting form:", error);
-        // }
-
         // Prepare the payload
         const payload = {
-            ...formData,
-            tab: activeTab,
-            selectedOptions: selectedCheckboxes,
+            surveyData: {
+                name: "Employee Satisfaction Survey", // Example name, you can update it as needed
+                loop_leads: [
+                    {
+                        name: formData.loop_lead_name,
+                        email: formData.loop_lead_email
+                    }
+                ],
+                competencies: selectedCheckboxes, // Use IDs directly
+                mgr_id: token // Manager ID
+            }
         };
 
-        // For now, just log the payload and show a success message
-        setIsFormSubmitted(true); // Mark the form as submitted to replace the component
-    };
+        console.log('payload',payload)
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/surveys/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': process.env.NEXT_PUBLIC_API_KEY
+                },
+                body: JSON.stringify(payload)
+            });
 
-    const options = activeTab === "individual_contributor" ? individualOptions : managerOptions;
+            if (response.ok) {
+                const data = await response.json();
+                const loopLeadId = data?.data?.surveys?.[0]?._id; 
+                if (loopLeadId) {
+                   router.push('/lead-dashboard?token='+loopLeadId)
+                }
+                // setIsFormSubmitted(true); // Mark the form as submitted to replace the component
+            } else {
+                setErrorMessage("Failed to submit the form. Please try again.");
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            setErrorMessage("An error occurred while submitting the form. Please try again.");
+        }
+    };
 
     // Render the thank you message if the form is submitted
     if (isFormSubmitted) {
         return (
             <Container className="my-[10rem]">
-                <div className="lg:w-[1080px] mx-auto bg-white rounded-[20px] p-[20px] md:p-[40px]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
+                <div className="lg:max-w-[1080px] mx-auto bg-white rounded-[20px] p-[20px] md:p-[40px]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
                     <h1 className="text-[38px] md:text-[48px] mb-5 text-center font-frank">Thank You!</h1>
-                    <p className="text-center text-[16px] font-poppins">Your registration is successfull.</p>
+                    <p className="text-center text-[16px] font-poppins">Your registration is successful.</p>
                 </div>
             </Container>
         );
     }
+
+    const options = assignments[activeTab] || [];
 
     return (
         <>
@@ -169,19 +205,19 @@ export default function StartSurveyFrom() {
                     <div>
                         <ul>
                             {options.map((option) => (
-                                <li key={option} className="mt-2">
+                                <li key={option.id} className="mt-2">
                                     <label className="inline-flex items-center">
                                         <input
                                             type="checkbox"
                                             className="form-checkbox h-5 w-5 text-black"
-                                            checked={selectedCheckboxes.includes(option)}
-                                            onChange={() => handleCheckboxChange(option)}
+                                            checked={selectedCheckboxes.includes(option.id)}
+                                            onChange={() => handleCheckboxChange(option.name, option.id)}
                                             disabled={
-                                                !selectedCheckboxes.includes(option) &&
+                                                !selectedCheckboxes.includes(option.id) &&
                                                 selectedCheckboxes.length >= 3
                                             }
                                         />
-                                        <span className="ml-3 text-black font-poppins">{option}</span>
+                                        <span className="ml-3 text-black font-poppins">{option.name}</span>
                                     </label>
                                 </li>
                             ))}
@@ -198,12 +234,9 @@ export default function StartSurveyFrom() {
                 </div>
                 {/* Display the error message */}
                 {errorMessage && (
-                    <div className="mt-4 text-red-500">
-                        {errorMessage}
-                    </div>
+                    <div className="text-red-600 text-center mt-4">{errorMessage}</div>
                 )}
-                {/* button tab end */}
             </form>
         </>
-    )
+    );
 }
