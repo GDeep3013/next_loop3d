@@ -1,10 +1,12 @@
 'use client'
 import React,{useEffect , useState} from 'react'
 import InputField from "../components/common/InputField";
-
-
+import { useSearchParams } from 'next/navigation';
+import config from '../config'
 export default function StartSurveyFrom() {
-
+    const searchParams = useSearchParams();
+    const token = searchParams.get('token');
+    console.log('token',token,config)
     const individualOptions = [
         "Accountability",
         "Builds Relationships",
@@ -53,7 +55,8 @@ export default function StartSurveyFrom() {
     };
 
 
-    useEffect(()=>{
+    useEffect(() => {
+        
 
     },[]);
 

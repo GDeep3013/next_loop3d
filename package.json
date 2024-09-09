@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "next": "14.2.8",
+    "next_loop3d": "file:",
     "react": "^18",
     "react-dom": "^18",
     "react-slick": "^0.30.2",
@@ -21,6 +22,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.8",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "typescript": "5.5.4"
   }
 }
