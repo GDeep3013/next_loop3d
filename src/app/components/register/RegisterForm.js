@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import ErrorMessage from "../components/common/ErrorMessage";
-import InputField from "../components/common/InputField";
+import ErrorMessage from "../common/ErrorMessage";
+import InputField from "../common/InputField";
 
 //import { registerUser } from "../api";
 

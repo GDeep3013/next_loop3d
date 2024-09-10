@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-dom";
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();

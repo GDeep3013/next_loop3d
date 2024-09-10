@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from "react";
-import Container from "../components/common/Container";
+import Container from "../common/Container";
 
 export default function ParticipantForm({ survey_id }) {
     const initialParticipants = Array.from({ length: 10 }, () => ({

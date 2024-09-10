@@ -2,7 +2,7 @@ import React from "react";
 import Container from "../components/common/Container";
 // import { useAppContext } from "../../AppContext/useAppContext";
 
-import RegisterForm from "./RegisterForm";
+import RegisterForm from "../components/register/RegisterForm";
 
 const Register = () => {
 

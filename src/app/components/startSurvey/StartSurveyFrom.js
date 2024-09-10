@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import InputField from "../components/common/InputField";
+import InputField from "../common/InputField";
 import { useSearchParams,useRouter   } from 'next/navigation';
-import Container from "../components/common/Container";
+import Container from "../common/Container";
 
 export default function StartSurveyForm() {
     const router = useRouter()

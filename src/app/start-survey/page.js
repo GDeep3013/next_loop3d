@@ -1,6 +1,6 @@
 
 import Container from "../components/common/Container";
- import StartSurveyFrom from "./StartSurveyFrom";
+ import StartSurveyFrom from "../components/startSurvey/StartSurveyFrom";
 const StartSurvey = () => {
 
   return (

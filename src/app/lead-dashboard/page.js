@@ -2,7 +2,7 @@
 import React, { useState,useEffect } from "react";
 import Container from "../components/common/Container";
 import { useSearchParams, useRouter } from 'next/navigation';
-import ParticipantForm from './ParticipantForm'
+import ParticipantForm from '../components/leadDashboard/ParticipantForm'
 
 const LeadDashboard = () => {
     
