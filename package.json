@@ -13,6 +13,7 @@
     "next_loop3d": "file:",
     "react": "^18",
     "react-dom": "^18",
+    "react-router-dom": "^6.26.1",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1"
   },
