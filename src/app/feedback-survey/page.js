@@ -73,7 +73,7 @@ const Survey = () => {
         const payload = {
             survey_id,
             participant_id,
-            result: Object.entries(responses).map(([questionId, answer]) => ({
+            answers: Object.entries(responses).map(([questionId, answer]) => ({
                 questionId,
                 ...answer
             }))
@@ -81,25 +81,25 @@ const Survey = () => {
 
         console.log('payload',payload)
 
-        // try {
-        //     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/submit-survey`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'x-api-key': process.env.NEXT_PUBLIC_API_KEY
-        //         },
-        //         body: JSON.stringify(payload)
-        //     });
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/surveys/answers/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': process.env.NEXT_PUBLIC_API_KEY
+                },
+                body: JSON.stringify(payload)
+            });
 
-        //     if (response.ok) {
-        //         console.log('Survey submitted successfully');
-        //         // Optionally, redirect or show a success message here
-        //     } else {
-        //         console.error('Failed to submit survey');
-        //     }
-        // } catch (error) {
-        //     console.error('Error submitting survey:', error);
-        // }
+            if (response.ok) {
+                alert('Survey answers saved successfully');
+                // Optionally, redirect or show a success message here
+            } else {
+                console.error('Failed to submit survey');
+            }
+        } catch (error) {
+            console.error('Error submitting survey:', error);
+        }
     };
 
     const renderQuestion = (question, index) => {
