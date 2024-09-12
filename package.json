@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "chart.js": "^4.4.4",
     "next": "14.2.8",
     "next_loop3d": "file:",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-router-dom": "^6.26.1",
     "react-slick": "^0.30.2",
