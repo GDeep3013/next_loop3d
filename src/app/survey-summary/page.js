@@ -4,6 +4,8 @@ import Container from "../components/common/Container";
 import { useSearchParams } from 'next/navigation';
 import { formatDateGB } from '../utils/dateUtils'
 import ChartBar from "../components/survey-summary/ChartBar"
+import CompetencyBar from "../components/survey-summary/CompetencyBar"
+
 
 const SurveySummary = () => {
     const searchParams = useSearchParams();
@@ -13,7 +15,10 @@ const SurveySummary = () => {
     const [totals, setTotals] = useState({});
     const [loader, setLoader] = useState(true);
     const [survey, setSurvey] = useState();
-    const [reportData, setReportData]= useState();
+    const [reportData, setReportData] = useState();
+    const [participants, setParticipants] = useState();
+    const[competencyReport, setCompetencyReport]= useState();
+
 
     const getSurvey = async (survey_id) => {
         try {
@@ -38,6 +43,8 @@ const SurveySummary = () => {
     };
     const getTotalParticipantsInvited = async (survey_id) => {
         try {
+            setLoader(true);
+
             const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/surveys/participants/invited/${survey_id}`;
             const response = await fetch(url, {
                 headers: { 'x-api-key': process.env.NEXT_PUBLIC_API_KEY }
@@ -46,24 +53,44 @@ const SurveySummary = () => {
                 const data = await response.json();
                 setCompletedResponses(data.completedResponses || {});
                 setTotals(data.totals || {});
+                setParticipants(data.participants || {})
             } else {
                 console.error('Failed to fetch survey');
             }
         } catch (error) {
             console.error('Error fetching survey:', error);
-        } finally {
-            setLoader(false);
         }
-    };
+    }
     const generateSurveyReport = async (survey_id) => {
         try {
+            setLoader(true);
+
             const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/surveys/generate-report/${survey_id}`;
             const response = await fetch(url, {
                 headers: { 'x-api-key': process.env.NEXT_PUBLIC_API_KEY }
             });
             if (response.ok) {
                 const data = await response.json();
+                // console.log('datadata',data?.report?.categories)
                 setReportData(data?.report?.categories|| {});
+            } else {
+                console.error('Failed to fetch survey');
+            }
+        } catch (error) {
+            console.error('Error fetching survey:', error);
+        } 
+    };
+    const generateCompetencyAverageReport = async (survey_id) => {
+        try {
+            setLoader(true);
+
+            const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/surveys/generate-competency-average/${survey_id}`;
+            const response = await fetch(url, {
+                headers: { 'x-api-key': process.env.NEXT_PUBLIC_API_KEY }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setCompetencyReport(data|| {});
             } else {
                 console.error('Failed to fetch survey');
             }
@@ -79,11 +106,9 @@ const SurveySummary = () => {
             getTotalParticipantsInvited(survey_id);
             getSurvey(survey_id)
             generateSurveyReport(survey_id)
+            generateCompetencyAverageReport(survey_id)
         }
     }, [survey_id]);
-
-
-    console.log('report',reportData)
 
     const Participants = ['Self', 'Direct Report', 'Teammate', 'Supervisor', 'Other'];
 
@@ -105,11 +130,28 @@ const SurveySummary = () => {
         ));
     };
 
+  
+
+    const renderCharts2 = () => {
+        if (!reportData) {
+            return null;
+        } else {
+            return <CompetencyBar data={reportData} /> 
+        }
+
+            
+        
+        // 
+    };
+
+ 
     const totalInvited = Participants.reduce((acc, Participant) => acc + (totals[Participant] || 0), 0);
     const totalCompleted = Participants.reduce((acc, Participant) => acc + (completedResponses[Participant] || 0), 0);
     return (
+        
         <div className="survey-inner pt-[120px] pb-[17rem] md:pb-[24rem] lg:pb-[20px]">
-            <Container>
+            {!loader && <Container>
+                {/* <CompetencyBar data={reportData} /> */}
                 <div className="survey-container p-6 md:p-10 lg:p-12 xl:p-[50px] m-auto rounded-[20px] lg:rounded-[30px] bg-[#F5F5F5] max-w-full">
                     <h2 className="text-black text-2xl md:text-3xl lg:text-4xl font-frank text-center mb-4">
                         LOOP3D 360 Report
@@ -156,15 +198,24 @@ const SurveySummary = () => {
                         <h3 className="text-custom-color text-lg sm:text-xl font-poppins font-extrabold">
                             Here are the participants that you invited:
                         </h3>
+
+                        <ul className="pl-4 sm:pl-6">
+                            {participants?.map((participant) => (
+                                <li className="list-disc font-poppins text-gray-600" key={participant._id}>
+                                    {`${participant?.p_first_name} ${participant?.p_last_name} (${participant?.p_type})`}
+                                </li>
+                            ))}
+                           
+                        </ul>
                         <p className="text-sm sm:text-base leading-relaxed text-gray-600 font-poppins mt-4 mb-4">
                             Here are the competencies that your manager selected as the most important to your role...
                         </p>
                         <ul className="pl-4 sm:pl-6">
-                        {survey?.competencies?.map((competency) => (
-                            <li className="list-disc font-poppins text-gray-600" key={competency._id}>
-                                {competency?.category_name}
-                            </li>
-                        ))}
+                            {survey?.competencies?.map((competency) => (
+                                <li className="list-disc font-poppins text-gray-600" key={competency._id}>
+                                    {competency?.category_name}
+                                </li>
+                            ))}
                            
                         </ul>
                         <p className="text-sm sm:text-base leading-relaxed text-gray-600 font-poppins mt-4 mb-4">
@@ -172,49 +223,30 @@ const SurveySummary = () => {
                         </p>
 
                         {/* graph box */}
-                        <div className="graph-box mt-5 mb-5">
-                        {renderCharts()}
+                        <div className="graph-box mt-5 mb-5">{renderCharts2()}
+                            {/* <CompetencyBar data={reportData} /> */}
+
                         </div>
 
                         <h3 className="text-custom-color text-lg sm:text-xl font-poppins font-extrabold">Top Strengths:</h3>
                         <p className="text-sm sm:text-base leading-relaxed text-gray-600 font-poppins mt-4 mb-4">
-                            Coaches And Develops
+                            {competencyReport?.topStrength}
                         </p>
 
                         <h3 className="text-custom-color text-lg sm:text-xl font-poppins font-extrabold">Top Developmental Opportunities:</h3>
                         <p className="text-sm sm:text-base leading-relaxed text-gray-600 font-poppins mt-4 mb-4">
-                            Coaches And Develops
+                            {competencyReport?.developmentalOpportunity}
+
                         </p>
 
                         <h2 className="uppercase font-frank text-custom-color text-[24px] sm:text-[35px]">
                             Summaries by Competency
                         </h2>
 
-                        <h3 className="text-custom-color text-lg sm:text-xl font-poppins font-extrabold uppercase">
-                            Competency: Coaches And Develops
-                        </h3>
-                        <p className="text-sm sm:text-base leading-relaxed text-gray-600 font-poppins mt-4 mb-4">
-                            The customer oriented competency is the proactive and empathetic approach leaders take to understand...
-                        </p>
 
                         {/* graph box */}
-                        <div className="graph-box mt-5 mb-5"></div>
-
-                        <h3 className="text-custom-color text-lg sm:text-xl font-poppins font-extrabold uppercase">
-                            Competency: Customer Oriented
-                        </h3>
-                        <p className="text-sm sm:text-base leading-relaxed text-gray-600 font-poppins mt-4 mb-4">
-                            The customer oriented competency is the proactive and empathetic approach leaders take to understand...
-                        </p>
-
-                        {/* graph box */}
-                        <div className="graph-box mt-5 mb-5"></div>
-                        <h3 className="text-custom-color text-xl sm:text-2xl md:text-3xl font-poppins font-extrabold uppercase mt-6">
-                            COMPETENCY: Accountability
-                        </h3>
-                        <p className="text-sm sm:text-base leading-relaxed text-gray-600 font-poppins mt-4 mb-4">
-                            The customer oriented competency is the proactive and empathetic approach leaders take to understand...
-                        </p>
+                        <div className="graph-box mt-5 mb-5">{renderCharts()}
+                        </div>
                         {/* graph box */}
                         <div className="graph-box mt-5 mb-5"></div>
                         <h3 className="text-custom-color text-xl sm:text-2xl md:text-3xl font-poppins font-extrabold uppercase mt-6">
@@ -225,7 +257,7 @@ const SurveySummary = () => {
                         </p>
                     </div>
                 </div>
-            </Container>
+            </Container>}
         </div>
     );
 };

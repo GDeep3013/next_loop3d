@@ -21,6 +21,7 @@ ChartJS.register(
 );
 
 const ChartBar = ({ competency, data }) => {
+   
     const chartData = {
         labels: Object.keys(data),
         datasets: [
@@ -58,7 +59,12 @@ const ChartBar = ({ competency, data }) => {
 
     return (
         <div>
-            <h3>{competency}</h3>
+            <h3 className="text-custom-color text-lg sm:text-xl font-poppins font-extrabold uppercase">
+                            Competency: {competency}
+            </h3>
+            <p className="text-sm sm:text-base leading-relaxed text-gray-600 font-poppins mt-4 mb-4">
+            The {competency} competency is the proactive and empathetic approach leaders take to understand...
+        </p>
             <Bar data={chartData} options={options} />
         </div>
     );
