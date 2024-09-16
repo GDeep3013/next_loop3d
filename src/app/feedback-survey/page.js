@@ -114,7 +114,7 @@ const Survey = () => {
     };
 
     const renderQuestion = (question, index) => {
-        if (question.questionType === 'Radio') {
+        if (question?.questionType === 'Radio') {
             return (
                 <div key={question._id}>
                     <p className="text-base sm:text-lg md:text-xl lg:text-1xl text-slate-700 font-bold font-poppins mt-3">
@@ -136,7 +136,7 @@ const Survey = () => {
                     </div>
                 </div>
             );
-        } else if (question.questionType === 'Text') {
+        } else if (question?.questionType === 'Text') {
             return (
                 <div key={question._id}>
                     <p className="text-base sm:text-lg md:text-xl lg:text-1xl text-slate-700 font-bold font-poppins mt-3">
