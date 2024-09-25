@@ -30,7 +30,7 @@ const Survey = () => {
             }
         } catch (error) {
             console.error('Error fetching survey:', error);
-            setLoader(false)
+            // setLoader(false)
 
         }
     };
@@ -156,55 +156,67 @@ const Survey = () => {
         }
         return null;
     };
-
+console.log('loader',loader,participant)
     return (
         <>
-            {!loader && (participant ? (
-                participant?.survey_status === 'completed' || participant?.ll_survey_status === 'yes' || participant?.mgr_survey_status === 'yes' ? (
-                    <Container className="my-[10rem]">
-                        <div className="lg:max-w-[1080px] mx-auto bg-white rounded-[20px] p-[20px] md:p-[40px]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
-                            <h1 className="text-[38px] md:text-[48px] mb-5 text-center font-frank">Survey Completed</h1>
-                            <p className="text-center text-[16px] font-poppins">You have already completed the survey. Thank you for your input!</p>
-                        </div>
-                    </Container>
-                ) : participant?.survey_status === 'pending' || participant?.ll_survey_status === 'no' || participant?.mgr_survey_status === 'no' ? (
-                    <div className="survey-inner pt-[120px] pb-[17rem] md:pb-[24rem] lg:pb-[20px]">
-                        <Container>
-                            <div className="survey-container p-[20px] max-w-[800px] m-auto rounded-lg shadow-custom3">
-                                <h2 className="text-black text-2xl md:text-3xl font-frank text-center">
-                                    360 Feedback Survey
-                                </h2>
-                                <p className="text-sm sm:text-base leading-relaxed text-gray-600 font-poppins mt-4">
-                                    You have been selected as a rater to provide insights into Gurdeep's performance on the survey items below. The purpose is to measure how often you notice these behaviors demonstrated by Gurdeep in the workplace. Your responses are anonymous and we appreciate your input!
-                                </p>
-    
-                                <form onSubmit={handleSubmit}>
-                                    {survey?.questions?.map((question, index) => renderQuestion(question, index))}
-    
-                                    <div className="text-center mt-6">
-                                        <button
-                                            type="submit"
-                                            className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[250px] max-[767px]:min-w-[200px] min-h-[56px] max-[767px]:min-h-[46px] leading-[56px] max-[767px]:leading-[46px] inline-block text-center rounded-[50px] font-poppins"
-                                        >
-                                            Submit
-                                        </button>
-                                    </div>
-                                </form>
+            {loader? <Container className="my-[10rem]">  <div className="loader py-20 w-full text-center">
+         <img className="m-auto animate-zoomIn" src="/images/header/loop3d-logo.webp" alt="Logo" />
+            </div>
+            </Container> :
+                participant != undefined ? (
+                    participant?.survey_status === 'completed' || participant?.ll_survey_status === 'yes' || participant?.mgr_survey_status === 'yes' ? (
+                        <Container className="my-[10rem]">
+                            <div className="lg:max-w-[1080px] mx-auto bg-white rounded-[20px]  mb-[18rem] p-[20px] md:p-[40px]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
+                                <h1 className="text-[38px] md:text-[48px] mb-5 text-center font-frank">Survey Completed</h1>
+                                <p className="text-center text-[16px] font-poppins">You have completed the survey. Thank you for your input!</p>
                             </div>
                         </Container>
-                    </div>
-                ) : (
-                    <Container className="my-[10rem]">
-                        <div className="lg:max-w-[1080px] mx-auto bg-white rounded-[20px] p-[20px] md:p-[40px]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
-                            <h1 className="text-[38px] md:text-[48px] mb-5 text-center font-frank">Link Expired</h1>
-                            <p className="text-center text-[16px] font-poppins">Unfortunately, the link you used has expired.</p>
-                            <p className="text-center text-[16px] font-poppins mt-4">
-                                If you need assistance, please <a href="/contact" className="text-blue-500 underline">contact support</a>.
-                            </p>
+                        ) : participant?.survey_status === 'pending' || participant?.ll_survey_status === 'no' || participant?.mgr_survey_status === 'no' ? (
+                        <div className="survey-inner pt-[120px] pb-[17rem] md:pb-[24rem] lg:pb-[20px]">
+                            <Container >
+                                <div className="survey-container p-[20px] max-w-[800px] m-auto  rounded-lg 12shadow-custom3">
+                                    <h2 className="text-black text-2xl md:text-3xl font-frank text-center">
+                                        360 Feedback Survey
+                                    </h2>
+                                    <p className="text-sm sm:text-base leading-relaxed text-gray-600 font-poppins mt-4">
+                                        You have been selected as a rater to provide insights into {survey?.loop_lead?.first_name} performance on the survey items below. The purpose is to measure how often you notice these behaviors demonstrated by {survey?.loop_lead?.first_name} in the workplace. Your responses are anonymous and we appreciate your input!
+                                    </p>
+        
+                                    <form onSubmit={handleSubmit}>
+                                        {survey?.questions?.map((question, index) => renderQuestion(question, index))}
+        
+                                        <div className="text-center mt-6">
+                                            <button
+                                                type="submit"
+                                                className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[250px] max-[767px]:min-w-[200px] min-h-[56px] max-[767px]:min-h-[46px] leading-[56px] max-[767px]:leading-[46px] inline-block text-center rounded-[50px] font-poppins"
+                                            >
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </Container>
                         </div>
-                    </Container>
-                )
-            ) : null)}
+                    ) : (
+                        <Container className="my-[10rem]">
+                            <div className="lg:max-w-[1080px] mx-auto bg-white rounded-[20px] p-[20px]  mb-[18rem] md:p-[40px]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
+                                <h1 className="text-[38px] md:text-[48px] mb-5 text-center font-frank">Link Expired</h1>
+                                <p className="text-center text-[16px] font-poppins">Unfortunately, the link you used has expired.</p>
+                                <p className="text-center text-[16px] font-poppins mt-4">
+                                    If you need assistance, please <a href="/contact" className="text-blue-500 underline">contact support</a>.
+                                </p>
+                            </div>
+                        </Container>
+                    )
+            ) : <Container className="my-[10rem]">
+            <div className="lg:max-w-[1080px] mx-auto bg-white rounded-[20px] p-[20px] md:p-[40px]  mb-[18rem]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
+                <h1 className="text-[38px] md:text-[48px] mb-5 text-center font-frank">Link Expired</h1>
+                <p className="text-center text-[16px] font-poppins">Unfortunately, the link you used has expired.</p>
+                <p className="text-center text-[16px] font-poppins mt-4">
+                    If you need assistance, please <a href="/contact" className="text-blue-500 underline">contact support</a>.
+                </p>
+            </div>
+        </Container>}
         </>
     );
     

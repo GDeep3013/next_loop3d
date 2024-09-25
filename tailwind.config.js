@@ -32,6 +32,15 @@ export default {
       filter: {
         'custom-filter': 'invert(1)',
       },
+      keyframes: {
+        zoomIn: {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.2)' },
+        },
+      },
+      animation: {
+        zoomIn: 'zoomIn 2s ease-in-out infinite alternate',
+      },
     },
   },
   plugins: [],
