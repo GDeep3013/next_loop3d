@@ -94,16 +94,16 @@ const Survey = () => {
         const newErrors = {};
 
         // Validate all questions
-        survey?.questions.forEach((question) => {
-            const response = responses[question._id];
+        survey?.questions?.forEach((question) => {
+            const response = responses[question?._id];
 
-            if (question.questionType === 'Radio' && (!response || !response.optionId)) {
-                newErrors[question._id] = 'This question is required.';
+            if (question?.questionType === 'Radio' && (!response || !response.optionId)) {
+                newErrors[question?._id] = 'This question is required.';
                 formIsValid = false;
             }
 
-            if (question.questionType === 'Text' && (!response || !response.answer || response.answer.length < 50)) {
-                newErrors[question._id] = 'Answer must be at least 50 characters long.';
+            if (question?.questionType === 'Text' && (!response || !response.answer || response?.answer.length < 50)) {
+                newErrors[question?._id] = 'Answer must be at least 50 characters long.';
                 formIsValid = false;
             }
         });
@@ -152,7 +152,7 @@ const Survey = () => {
                         {question.questionText}
                     </p>
                     <div className="survey-options mt-2">
-                        {question.options.map((option, optIndex) => (
+                        {question?.options.map((option, optIndex) => (
                             <label key={option._id} className="w-full inline-block mb-1 font-poppins">
                                 <input
                                     className="mr-3"
@@ -164,14 +164,14 @@ const Survey = () => {
                                 {option.text}
                             </label>
                         ))}
-                        {errors[question._id] && <p className="text-red-500">{errors[question._id]}</p>}
+                        {errors[question?._id] && <p className="text-red-500">{errors[question?._id]}</p>}
 
                     </div>
                 </div>
             );
         } else if (question?.questionType === 'Text') {
             return (
-                <div key={question._id}>
+                <div key={question?._id}>
                     <p className="text-base sm:text-lg md:text-xl lg:text-1xl text-slate-700 font-bold font-poppins mt-3">
                         {question.questionText}
                     </p>
@@ -180,10 +180,10 @@ const Survey = () => {
                             className="w-full p-2 border rounded-lg"
                             name={`question_${index}`}
                             rows="3"
-                            onChange={(e) => handleTextChange(question._id, e.target.value)}
+                            onChange={(e) => handleTextChange(question?._id, e.target.value)}
                             required
                         ></textarea>
-                    {errors[question._id] && <p className="text-red-500">{errors[question._id]}</p>}
+                    {errors[question?._id] && <p className="text-red-500">{errors[question?._id]}</p>}
 
                     </div>
                 </div>
@@ -199,7 +199,7 @@ console.log('loader',loader,participant)
             </div>
             </Container> :
                 participant != undefined ? (
-                    participant?.survey_status === 'completed' || participant?.ll_survey_status === 'yes' || participant?.mgr_survey_status === 'yes' ? (
+                    participant?.survey_status === 'completed' || participant?.ll_survey_status === 'yes' &&  participant?.mgr_survey_status === 'yes' ? (
                         <Container className="my-[10rem]">
                             <div className="lg:max-w-[1080px] mx-auto bg-white rounded-[20px]  mb-[18rem] p-[20px] md:p-[40px]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
                                 <h1 className="text-[38px] md:text-[48px] mb-5 text-center font-frank">Survey Completed</h1>
