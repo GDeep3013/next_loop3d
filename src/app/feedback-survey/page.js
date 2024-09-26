@@ -7,6 +7,7 @@ const Survey = () => {
     const searchParams = useSearchParams();
     const survey_id = searchParams.get('survey_id');
     const participant_id = searchParams.get('participant_id');
+    const [errors, setErrors] = useState({});
 
     const [survey, setSurvey] = useState();
     const [participant, setParticipants] = useState();
@@ -70,6 +71,10 @@ const Survey = () => {
             ...prevResponses,
             [questionId]: { optionId }
         }));
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            [questionId]: ''  // Clear error on valid selection
+        }));
     };
 
     const handleTextChange = (questionId, answer) => {
@@ -77,10 +82,37 @@ const Survey = () => {
             ...prevResponses,
             [questionId]: { answer }
         }));
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            [questionId]: answer.length < 50 ? 'Answer must be at least 50 characters long.' : ''
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        let formIsValid = true;
+        const newErrors = {};
+
+        // Validate all questions
+        survey?.questions.forEach((question) => {
+            const response = responses[question._id];
+
+            if (question.questionType === 'Radio' && (!response || !response.optionId)) {
+                newErrors[question._id] = 'This question is required.';
+                formIsValid = false;
+            }
+
+            if (question.questionType === 'Text' && (!response || !response.answer || response.answer.length < 50)) {
+                newErrors[question._id] = 'Answer must be at least 50 characters long.';
+                formIsValid = false;
+            }
+        });
+
+        setErrors(newErrors);
+
+        if (!formIsValid) {
+            return;
+        }
         const payload = {
             survey_id,
             participant_id,
@@ -101,7 +133,6 @@ const Survey = () => {
             });
 
             if (response.ok) {
-                alert('Survey answers saved successfully');
                 window.location.reload()
             } else {
                 console.error('Failed to submit survey');
@@ -133,6 +164,8 @@ const Survey = () => {
                                 {option.text}
                             </label>
                         ))}
+                        {errors[question._id] && <p className="text-red-500">{errors[question._id]}</p>}
+
                     </div>
                 </div>
             );
@@ -150,6 +183,8 @@ const Survey = () => {
                             onChange={(e) => handleTextChange(question._id, e.target.value)}
                             required
                         ></textarea>
+                    {errors[question._id] && <p className="text-red-500">{errors[question._id]}</p>}
+
                     </div>
                 </div>
             );
