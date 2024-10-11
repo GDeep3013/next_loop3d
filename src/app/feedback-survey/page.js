@@ -232,7 +232,16 @@ return (
                                     You have been selected as a rater to provide insights into {survey?.loop_lead?.first_name}'s performance. Your responses are anonymous, and we appreciate your input!
                                 </p>
                                 <form onSubmit={handleSubmit}>
-                                    {survey?.questions?.map((question, index) => renderQuestion(question, index))}
+                                    {/* {survey?.questions?.map((question, index) => renderQuestion(question, index))}
+                                     */}
+                                                {survey?.questions
+                                            ?.filter((question) => question?.questionType === 'Radio')
+                                            .map((question, index) => renderQuestion(question, index))
+                                        }
+                                        {survey?.questions
+                                            ?.filter((question) => question?.questionType === 'Text')
+                                            .map((question, index) => renderQuestion(question, index))
+                                        }
                                     <div className="text-center mt-6">
                                         <button type="submit" className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[250px] max-[767px]:min-w-[200px] min-h-[56px] max-[767px]:min-h-[46px] leading-[56px] max-[767px]:leading-[46px] inline-block text-center rounded-[50px] font-poppins">
                                             Submit
