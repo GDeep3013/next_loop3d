@@ -52,7 +52,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#174A6D] text-white font-poppins">
-      <div className={`${marginTop} ${disbleContent} ${marginBox}`}>
+      {/* <div className={`${marginTop} ${disbleContent} ${marginBox}`}>
         <Container className="py-14 relative">
           <div className="real absolute bottom-0 left-0 right-0 mx-[20px] md:mx-[40px] bg-[#7ABCDB] py-8 rounded-[6px] bg-[url('/images/footer/footer_lines_bg.svg')] bg-cover bg-center bg-no-repeat">
             <div className="px-[20px] md:px-[50px] mb-4 flex flex-col justify-between items-center text-center md:text-left">
@@ -88,7 +88,7 @@ const Footer = () => {
             </div>
           </div>
         </Container>
-      </div>
+      </div> */}
       <Container className="py-14">
         {/* mobile display */}
         <div className="flex flex-col items-center xl:hidden pr-3 mb-3">

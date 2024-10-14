@@ -35,7 +35,7 @@ const About = () => {
                 </Container>
             </div>
 
-            <div className="bg-custom-bg xl:pt-[80px] lg:pb-[260px] md:pb-[80%] pb-[490px] pt-12 ">
+            <div className="bg-custom-bg xl:pt-[80px]  pb-[2rem] pt-12 ">
                 <Container className="relative">
                     <div className="absolute bg-black w-[1px] left-[50%] translate-x-[-50%] h-full hidden md:inline-block"></div>
                     <div className="flex md:flex-nowrap flex-wrap relative flex-col-reverse md:flex-row items-center">

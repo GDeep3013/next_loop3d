@@ -105,7 +105,7 @@ const Home = () => {
             </div>
 
 
-            <div className="how-works bg-[#f5f5f5] pt-12 md:pt-20 pb-[29rem] md:pb-[37rem] lg:pb-[16rem]">
+            <div className="how-works bg-[#f5f5f5] pt-12 md:pt-20 pb-[2rem]">
                 <Container>
                     <div className="xl:flex xl:space-x-8">
                         <div className="w-full xl:w-1/2 xl:pr-8 text-center xl:text-left">

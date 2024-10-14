@@ -107,7 +107,7 @@ const Contact = () => {
                     </div>
                 </Container>
             </div>
-            <div className="pb-[17rem] sm:pb-[14rem] md:pb-[400px] lg:pb-[40px] xl:pb-[77px]">
+            <div className="pb-[2rem]">
                 <Container>
                     <iframe
                         className="w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-[10px] md:rounded-[20px]"

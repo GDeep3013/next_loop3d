@@ -74,7 +74,7 @@ const Services = () => {
             <div className="built-science">
                 <div className="lg:flex">
                     <div className="lg:w-1/2 w-full">
-                        <img src="/images/service-1.webp" className="lg:h-lvh object-cover" />
+                        <img src="/images/service-1.webp" className="lg:h-lvh object-cover w-full" />
                     </div>
                     <div className="lg:w-1/2 w-full bg-custom-color lg:py-[80px] lg:px-[50px] py-12 px-6 flex items-center">
                         <div className="max-w-[671px]">
