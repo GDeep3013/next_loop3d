@@ -171,8 +171,8 @@ const Home = () => {
                     </div>
 
                     <div className="banner-buttons mt-12 md:mt-16 flex flex-col md:flex-row justify-center gap-4">
-                        <a href="javascript:;" className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[250px] h-[46px] flex items-center justify-center leading-[46px] rounded-full font-poppins m-auto lg:m-0">Request a Demo</a>
-                        <a href="javascript:;" className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[250px] h-[46px] flex items-center justify-center leading-[46px] rounded-full font-poppins m-auto lg:m-0">Learn More</a>
+                        <a href="javascript:;" className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[250px] h-[56px] flex items-center justify-center leading-[56px] rounded-full font-poppins m-auto lg:m-0">Request a Demo</a>
+                        <a href="javascript:;" className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[250px] h-[56px] flex items-center justify-center leading-[56px] rounded-full font-poppins m-auto lg:m-0">Learn More</a>
                     </div>
                 </Container>
             </div>

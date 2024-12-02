@@ -8,9 +8,10 @@ const Services = () => {
 
     return (
         <>
-            <div className="about-banner bg-[url('/images/service-banner.webp')] bg-cover bg-repeat lg:h-custom-height lg:min-h-auto min-h-[600px] flex items-center md:bg-left bg-center lg:pt-0 pt-16">
+            <div className="about-banner bg-[url('/images/service-banner.webp')] bg-cover bg-repeat lg:h-custom-height lg:min-h-auto min-h-[600px] flex items-center md:bg-left bg-center lg:pt-0 pt-16 relative">
+            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
                 <Container>
-                    <div className="about-text text-left max-w-[400px] lg:max-w-[550px] xl:max-w-[720px] ml-[auto]">
+                    <div className="about-text text-left max-w-[400px] lg:max-w-[550px] xl:max-w-[720px] ml-[auto] z-[1] relative">
                         <h1 className="xl:text-[70px] text-white font-frank text-4xl">Why LOOP3D?</h1>
                         <ul className="pl-[18px] mt-5">
                             <li className="text-base list-disc leading-[26px] text-white font-poppins"> Enhance Employee Performance </li>
@@ -26,7 +27,7 @@ const Services = () => {
 
             <div className="building-peak lg:py-[80px] py-12 max-[1024px]:overflow-hidden">
                 <Container>
-                    <div className="building-peak-heading text-center">
+                    <div className="building-peak-heading text-center mb-4 md:mb-8">
                         <h2 className="text-[#174a6d] text-3xl min-[1025px]:text-[48px] font-frank">Building peak performance cultures at top organizations</h2>
                     </div>
                     <PartnerSlider />
@@ -116,7 +117,7 @@ const Services = () => {
                 <Container>
                     <div className="">
                         <h2 className="text-white lg:text-[48px] text-3xl font-frank">Ready to learn more?</h2>
-                        <p className="text-base leading-[26px] mt-3 text-white font-poppins">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <p className="text-base leading-[26px] mt-3 text-white font-poppins">Schedule a free demo call with us so we can show you exactly how we can help you and your organization.</p>
                         <a href="/contact" className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[250px] min-h-[56px] leading-[56px] inline-block text-center rounded-[50px] font-poppins mt-[38px]">Request a Demo</a>
                     </div>
                 </Container>

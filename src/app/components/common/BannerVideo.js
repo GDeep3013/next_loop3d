@@ -39,6 +39,7 @@ export default function BannerVideo() {
     <div className="banner-video max-w-[640px] mx-auto xl:mx-0">
       <div className="video-outer relative">
         <video
+          ref={videoRef}
           id="banner-video"
           className="object-cover w-full h-auto max-w-[640px]"
           loop
