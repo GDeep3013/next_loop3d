@@ -102,7 +102,7 @@ const Survey = () => {
                 formIsValid = false;
             }
 
-            if (question?.questionType === 'Text' && (!response || !response.answer || response?.answer.length < 50)) {
+            if (question?.questionType === 'OpenEnded' && (!response || !response.answer || response?.answer.length < 50)) {
                 newErrors[question?._id] = 'Answer must be at least 50 characters long.';
                 formIsValid = false;
             }
@@ -169,7 +169,7 @@ const Survey = () => {
                     </div>
                 </div>
             );
-        } else if (question?.questionType === 'Text') {
+        } else if (question?.questionType == 'OpenEnded') {
             return (
                 <div key={question?._id}>
                     <p className="text-base sm:text-lg md:text-xl lg:text-1xl text-slate-700 font-bold font-poppins mt-3">
@@ -239,7 +239,7 @@ return (
                                             .map((question, index) => renderQuestion(question, index))
                                         }
                                         {survey?.questions
-                                            ?.filter((question) => question?.questionType === 'Text')
+                                            ?.filter((question) => question?.questionType === 'OpenEnded')
                                             .map((question, index) => renderQuestion(question, index))
                                         }
                                     <div className="text-center mt-6">
