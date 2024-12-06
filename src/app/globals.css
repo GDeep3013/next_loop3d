@@ -30,6 +30,7 @@
   background: url('/images/arrow-next.svg') no-repeat;
 }
 
+
 @media screen and (min-width:1025px) and (max-width:1200px) {
   .slick-slider button.slick-arrow.slick-prev {
     left: 30px;

@@ -135,7 +135,7 @@ const Footer = () => {
           </div>
 
           <div className="xl:px-12 mt-6 text-center lg:text-left">
-            <h4 className="text-[25px] font-frank mb-2">Useful Links</h4>
+            <h4 className="text-[25px] font-frank mb-2">Navigation</h4>
             <ul className="space-y-2">
               <li>
                 <Link
@@ -157,15 +157,6 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/services"
-                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className={`text-[16px] leading-[30px] ${isActive('/services') ? 'text-custom-color2' : ''}`}
-                >
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/contact"
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className={`text-[16px] leading-[30px] ${isActive('/contact') ? 'text-custom-color2' : ''}`}
@@ -173,6 +164,45 @@ const Footer = () => {
                   Contact Us
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/services"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className={`text-[16px] leading-[30px] ${isActive('/services') ? 'text-custom-color2' : ''}`}
+                >
+                  Services
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/pricing"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className={`text-[16px] leading-[30px] ${isActive('/pricing') ? 'text-custom-color2' : ''}`}
+                >
+                  Pricing
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/request-demo"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className={`text-[16px] leading-[30px] ${isActive('/request-demo') ? 'text-custom-color2' : ''}`}
+                >
+                  Request a Demo
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/newsletter"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className={`text-[16px] leading-[30px] ${isActive('/newsletter') ? 'text-custom-color2' : ''}`}
+                >
+                  Newsletter
+                </Link>
+              </li>
+
               <li>
                 <Link
                   href="/terms-of-service"
@@ -195,7 +225,7 @@ const Footer = () => {
           </div>
 
           <div className="mt-6 text-center lg:text-left">
-            <h4 className="text-[25px] font-frank mb-2">Store Information</h4>
+            <h4 className="text-[25px] font-frank mb-2">Contact Info</h4>
             <div className="flex space-x-2 justify-center lg:justify-start items-center mb-4">
               <Link href="#">
                 <img
@@ -229,23 +259,24 @@ const Footer = () => {
                   alt="Logo"
                 />
               </Link>
+              <Link href="tel:310-565-2811">
               <p className="text-[16px] frank-poppins leading-[30px]">
-                (000) 000-0000
+              (310) 565-2811
               </p>
+              </Link>
             </div>
           </div>
 
           <div className="mt-6 text-center lg:text-left">
             <h4 className="text-[25px] font-frank mb-2">Join our Newsletter</h4>
             <p className="text-[16px] mb-4 frank-poppins leading-[30px] w-[320px] xl:w-auto mx-auto">
-              Our email are designed to elevate and inspire your daily mental
-              health rituals.
+            Stay ahead in talent and organizational development. Subscribe to our newsletter for expert insights, actionable tips, and the latest trends delivered straight to your inbox.
             </p>
-            <div className="lg:flex gap-2 mt-4 lg:mt-10">
+            <div className="gap-2 mt-4 lg:mt-8">
+              <form>
+              <label className="text-sm font-light text-[#CCCCCC]">Email <sup>*</sup> </label>
               <InputField
-                labelClass="text-white"
-                className="rounded-full px-8 placeholder-[#C3C3C3] mx-auto !w-[280px] lg:!w-[230px]"
-                label=""
+                className="px-4 py-1 placeholder-[#000] mx-auto !w-full min-h-[46px]"
                 type="email"
                 name="email"
                 value={email}
@@ -254,10 +285,11 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="!mx-auto mt-4 lg:mt-0 min-w-[138px] min-h-[56px] items-center bg-[#7ABCDB] flex justify-center px-[20px] text-[16px] rounded-full text-white"
+                className="mt-4 min-w-[138px] min-h-[40px] items-center bg-[#7ABCDB] flex justify-center px-[20px] text-[16px] rounded-full text-white"
               >
                 Submit
               </button>
+              </form>
             </div>
           </div>
         </div>
