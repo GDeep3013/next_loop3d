@@ -14,6 +14,7 @@ export default class ImageSlider extends Component {
       speed: 1000,
       slidesToShow: 1,
       slidesToScroll: 1,
+      loop:false,
       responsive: [
         {
           breakpoint: 768,

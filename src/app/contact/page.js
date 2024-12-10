@@ -1,6 +1,7 @@
 import React from "react";
 import  Link  from "next/link";
 import Container from "../components/common/Container";
+import ContactForm from "../components/ContactForm"
 
 const Contact = () => {
 
@@ -53,57 +54,7 @@ const Contact = () => {
                                 <br /> Manhattan Beach, CA 90266
                             </Link>
                         </div>
-                        <div className="w-full md:w-1/2 mt-8 md:mt-0">
-                            <div className="form-box py-[30px] px-[20px] md:py-[40px] md:px-[30px] shadow-custom3 rounded-3xl">
-                                <form action="post">
-                                    <div className="form-group">
-                                        <input
-                                            placeholder="First Name"
-                                            type="text"
-                                            className="w-full border border-custom-color2 leading-[40px] md:leading-[56px] rounded px-[14px] focus:outline-[2px] outline-custom-color2 text-base font-poppins"
-                                        />
-                                    </div>
-                                    <div className="form-group mt-4 md:mt-5">
-                                        <input
-                                            placeholder="Last Name"
-                                            type="text"
-                                            className="w-full border border-custom-color2 leading-[40px] md:leading-[56px] rounded px-[14px] focus:outline-[2px] outline-custom-color2 text-base font-poppins"
-                                        />
-                                    </div>
-                                    <div className="form-group mt-4 md:mt-5">
-                                        <input
-                                            placeholder="Email"
-                                            type="email"
-                                            className="w-full border border-custom-color2 leading-[40px] md:leading-[56px] rounded px-[14px] focus:outline-[2px] outline-custom-color2 text-base font-poppins"
-                                        />
-                                    </div>
-                                    <div className="form-group mt-4 md:mt-5">
-                                        <select
-                                            className="bg-[url('/images/down.svg')] bg-no-repeat bg-[length:20px_20px] bg-[position:calc(100%-14px)_center] appearance-none w-full border border-custom-color2 leading-[40px] md:leading-[56px] rounded px-[14px] focus:outline-[2px] outline-custom-color2 text-base font-poppins"
-                                        >
-                                            <option value="Sales Inquiry">Sales Inquiry</option>
-                                            <option value="Support Inquiry">Support Inquiry</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group mt-4 md:mt-5">
-                                        <textarea
-                                            placeholder="Message"
-                                            rows={3}
-                                            className="w-full border border-custom-color2 leading-[40px] md:leading-[56px] rounded px-[14px] focus:outline-[2px] outline-custom-color2 text-base font-poppins"
-                                        />
-                                    </div>
-                                    <div className="form-group mt-4 md:mt-5">
-                                        <button
-                                            type="submit"
-                                            className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[150px] md:min-w-[200px] min-h-[40px] md:min-h-[56px] leading-[40px] md:leading-[56px] inline-block text-center rounded-[50px] font-poppins"
-                                        >
-                                            Submit
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                        <ContactForm/>
                     </div>
                 </Container>
             </div>

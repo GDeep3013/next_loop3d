@@ -37,7 +37,10 @@ const Services = () => {
             <div className="built-science lg:pb-[80px] pb-0">
                 <div className="lg:flex items-center">
                     <div className="lg:w-1/2 w-full lg:px-0 px-[60px] lg:pb-0 pb-[40px]">
-                        <ImageSlider />
+                        {/* <ImageSlider /> */}
+                        <div className="">
+          <img className="object-contain m-auto" src="/images/service-2.webp" alt="Logo image" />
+        </div>
                     </div>
                     <div className="lg:w-1/2 w-full bg-custom-bg lg:py-[80px] py-12 lg:px-[50px] px-8 lg:mt-0 mt-4">
                         <div className="max-w-[671px]">
