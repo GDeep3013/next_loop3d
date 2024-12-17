@@ -144,53 +144,59 @@ const Survey = () => {
         }
     };
 
-    const renderQuestion = (question, index) => {
-        if (question?.questionType === 'Radio') {
-            return (
-                <div key={question._id}>
-                    <p className="text-base sm:text-lg md:text-xl lg:text-1xl text-slate-700 font-bold font-poppins mt-3">
-                        {question.questionText}
-                    </p>
-                    <div className="survey-options mt-2">
-                        {question?.options.map((option, optIndex) => (
-                            <label key={option._id} className="w-full inline-block mb-1 font-poppins">
-                                <input
-                                    className="mr-3"
-                                    type="radio"
-                                    name={`question_${index}`}
-                                    onChange={() => handleOptionChange(question._id, option._id)}
-                                    required
-                                />
-                                {option.text}
-                            </label>
-                        ))}
-                        {errors[question?._id] && <p className="text-red-500">{errors[question?._id]}</p>}
-
+    const renderQuestion = (questions) => {
+        const uniqueQuestions = questions.filter(
+            (question, index, self) =>
+                index === self.findIndex((q) => q._id === question._id) // Ensures uniqueness by `_id`
+        );
+    
+        return uniqueQuestions.map((question, index) => {
+            if (question?.questionType === 'Radio') {
+                return (
+                    <div key={question._id}>
+                        <p className="text-base sm:text-lg md:text-xl lg:text-1xl text-slate-700 font-bold font-poppins mt-3">
+                            {question.questionText}
+                        </p>
+                        <div className="survey-options mt-2">
+                            {question?.options.map((option) => (
+                                <label key={option._id} className="w-full inline-block mb-1 font-poppins">
+                                    <input
+                                        className="mr-3"
+                                        type="radio"
+                                        name={`question_${index}`}
+                                        onChange={() => handleOptionChange(question._id, option._id)}
+                                        required
+                                    />
+                                    {option.text}
+                                </label>
+                            ))}
+                            {errors[question?._id] && <p className="text-red-500">{errors[question?._id]}</p>}
+                        </div>
                     </div>
-                </div>
-            );
-        } else if (question?.questionType == 'OpenEnded') {
-            return (
-                <div key={question?._id}>
-                    <p className="text-base sm:text-lg md:text-xl lg:text-1xl text-slate-700 font-bold font-poppins mt-3">
-                        {question.questionText}
-                    </p>
-                    <div className="survey-options mt-2">
-                        <textarea
-                            className="w-full p-2 border rounded-lg"
-                            name={`question_${index}`}
-                            rows="3"
-                            onChange={(e) => handleTextChange(question?._id, e.target.value)}
-                            required
-                        ></textarea>
-                        {errors[question?._id] && <p className="text-red-500">{errors[question?._id]}</p>}
-
+                );
+            } else if (question?.questionType === 'OpenEnded') {
+                return (
+                    <div key={question?._id}>
+                        <p className="text-base sm:text-lg md:text-xl lg:text-1xl text-slate-700 font-bold font-poppins mt-3">
+                            {question.questionText}
+                        </p>
+                        <div className="survey-options mt-2">
+                            <textarea
+                                className="w-full p-2 border rounded-lg"
+                                name={`question_${index}`}
+                                rows="3"
+                                onChange={(e) => handleTextChange(question?._id, e.target.value)}
+                                required
+                            ></textarea>
+                            {errors[question?._id] && <p className="text-red-500">{errors[question?._id]}</p>}
+                        </div>
                     </div>
-                </div>
-            );
-        }
-        return null;
+                );
+            }
+            return null;
+        });
     };
+    
     const SurveyCompletedMessage = () => (
         <Container className="my-[10rem]">
         <div className="lg:max-w-[1080px] mx-auto bg-white rounded-[20px] mb-[18rem] p-[20px] md:p-[40px]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
