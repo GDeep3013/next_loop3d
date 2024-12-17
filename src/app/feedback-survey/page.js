@@ -237,7 +237,10 @@ const Survey = () => {
                                         {survey?.questions
                                             ?.filter(
                                                 (question, index, self) =>
-                                                    index === self.findIndex((q) => q?._id === question?._id) // Ensure uniqueness
+                                                    index ===
+                                                    self.findIndex((q) =>
+                                                        q?.options?.some((opt) => opt.text === question?.options?.[0]?.text) // Check option.text uniqueness
+                                                    )
                                             )
                                             .filter((question) => question?.questionType === "Radio") // Filter Radio questions
                                             .map((question, index) => renderQuestion(question, index))}
@@ -245,10 +248,14 @@ const Survey = () => {
                                         {survey?.questions
                                             ?.filter(
                                                 (question, index, self) =>
-                                                    index === self.findIndex((q) => q?._id === question?._id) // Ensure uniqueness
+                                                    index ===
+                                                    self.findIndex((q) =>
+                                                        q?.options?.some((opt) => opt.text === question?.options?.[0]?.text) // Check option.text uniqueness
+                                                    )
                                             )
                                             .filter((question) => question?.questionType === "OpenEnded") // Filter OpenEnded questions
                                             .map((question, index) => renderQuestion(question, index))}
+
                                         <div className="text-center mt-6">
                                             <button type="submit" className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[250px] max-[767px]:min-w-[200px] min-h-[56px] max-[767px]:min-h-[46px] leading-[56px] max-[767px]:leading-[46px] inline-block text-center rounded-[50px] font-poppins">
                                                 Submit
