@@ -239,7 +239,11 @@ return (
                                             .map((question, index) => renderQuestion(question, index))
                                         }
                                         {survey?.questions
-                                            ?.filter((question) => question?.questionType === 'OpenEnded')
+                                            ?.filter(
+                                                (question, index, self) =>
+                                                    question?.questionType === "OpenEnded" && // Filter by 'OpenEnded'
+                                                    index === self.findIndex((q) => q?.questionText === question?.questionText) // Ensure unique questionText
+                                            )
                                             .map((question, index) => renderQuestion(question, index))
                                         }
                                     <div className="text-center mt-6">
