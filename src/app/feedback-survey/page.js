@@ -94,16 +94,21 @@ const Survey = () => {
         const newErrors = {};
 
         // Validate all questions
-        survey?.questions?.forEach((question) => {
+        const uniqueQuestions = survey?.questions?.filter(
+            (question, index, self) =>
+                index === self.findIndex((q) => q?.questionText === question?.questionText) // Ensure unique questionText
+        );
+        
+        uniqueQuestions.forEach((question) => {
             const response = responses[question?._id];
-
-            if (question?.questionType === 'Radio' && (!response || !response.optionId)) {
-                newErrors[question?._id] = 'This question is required.';
+        
+            if (question?.questionType === "Radio" && (!response || !response.optionId)) {
+                newErrors[question?._id] = "This question is required.";
                 formIsValid = false;
             }
-
-            if (question?.questionType === 'OpenEnded' && (!response || !response.answer || response?.answer.length < 50)) {
-                newErrors[question?._id] = 'Answer must be at least 50 characters long.';
+        
+            if (question?.questionType === "OpenEnded" && (!response || !response.answer || response?.answer.length < 50)) {
+                newErrors[question?._id] = "Answer must be at least 50 characters long.";
                 formIsValid = false;
             }
         });
