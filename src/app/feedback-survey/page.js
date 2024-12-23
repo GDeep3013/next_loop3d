@@ -217,14 +217,16 @@ return (
                 {/* {(participant.ll_survey_status === 'yes'&& participant?.loop_lead?._id == participant_id) &&<SurveyCompletedMessage/>}
 
                 {(participant.mgr_survey_status === 'yes' && participant?.manager?._id == participant_id) &&<SurveyCompletedMessage />} */}
-                {participant.survey_status === 'completed' ? (
-                    <Container className="my-[10rem]">
-                        <div className="lg:max-w-[1080px] mx-auto bg-white rounded-[20px] mb-[18rem] p-[20px] md:p-[40px]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
-                            <h1 className="text-[38px] md:text-[48px] mb-5 text-center font-frank">Survey Completed</h1>
-                            <p className="text-center text-[16px] font-poppins">You have completed the survey. Thank you for your input!</p>
-                        </div>
-                    </Container>
-                    ) : ((participant.ll_survey_status == 'no' && participant?.loop_lead?._id == participant_id)
+                    {
+                    //     participant.survey_status === 'completed' ? (
+                    // <Container className="my-[10rem]">
+                    //     <div className="lg:max-w-[1080px] mx-auto bg-white rounded-[20px] mb-[18rem] p-[20px] md:p-[40px]" style={{ boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)" }}>
+                    //         <h1 className="text-[38px] md:text-[48px] mb-5 text-center font-frank">Survey Completed</h1>
+                    //         <p className="text-center text-[16px] font-poppins">You have completed the survey. Thank you for your input!</p>
+                    //     </div>
+                    // </Container>
+                    //     ) :
+                            ((participant.ll_survey_status == 'no' && participant?.loop_lead?._id == participant_id)
                         || (participant.mgr_survey_status === 'no' && participant?.manager?._id == participant_id) 
                         || (participant.survey_status === 'pending' && participant?._id == participant_id)) ? (
                     <div className="survey-inner pt-[120px] pb-[17rem] md:pb-[24rem] lg:pb-[20px]">
