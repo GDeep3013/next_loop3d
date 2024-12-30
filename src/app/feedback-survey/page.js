@@ -138,6 +138,7 @@ const Survey = () => {
             });
 
             if (response.ok) {
+                window.scrollTo(0, 0)
                 window.location.reload()
             } else {
                 console.error('Failed to submit survey');
