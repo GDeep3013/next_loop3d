@@ -13,6 +13,8 @@ const Survey = () => {
     const [participant, setParticipants] = useState();
     const [responses, setResponses] = useState({});
     const [loader, setLoader] = useState(true);
+    const [formLoader, setFormLoader] = useState(false);
+
 
     const getSurvey = async (survey_id) => {
         try {
@@ -128,6 +130,7 @@ const Survey = () => {
         };
 
         try {
+            setFormLoader(true)
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/surveys/answers/create`, {
                 method: 'POST',
                 headers: {
@@ -140,12 +143,15 @@ const Survey = () => {
             if (response.ok) {
                 window.scrollTo(0, 0)
                 window.location.reload()
+                setFormLoader(false)
             } else {
                 console.error('Failed to submit survey');
+                setFormLoader(false)
 
             }
         } catch (error) {
             console.error('Error submitting survey:', error);
+            setFormLoader(false)
 
         }
     };
@@ -256,7 +262,7 @@ return (
                                         }
                                     <div className="text-center mt-6">
                                         <button type="submit" className="bg-[#7abcdb] hover:bg-[#174a6d] text-white min-w-[250px] max-[767px]:min-w-[200px] min-h-[56px] max-[767px]:min-h-[46px] leading-[56px] max-[767px]:leading-[46px] inline-block text-center rounded-[50px] font-poppins">
-                                            Submit
+                                           {formLoader?"Submitting":"Submit"} 
                                         </button>
                                     </div>
                                 </form>
