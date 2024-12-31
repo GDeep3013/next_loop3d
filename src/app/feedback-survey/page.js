@@ -109,9 +109,11 @@ const Survey = () => {
                 formIsValid = false;
             }
         
-            if (question?.questionType === "OpenEnded" && (!response || !response.answer || response?.answer.length < 50)) {
-                newErrors[question?._id] = "Answer must be at least 50 characters long.";
-                formIsValid = false;
+            if (question?.questionType === "OpenEnded") {
+                if (!response?.answer && response.answer.length < 50) {
+                    newErrors[question._id] = "Answer must be at least 50 characters long.";
+                    formIsValid = false;
+                }
             }
         });
 
