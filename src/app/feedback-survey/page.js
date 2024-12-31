@@ -193,7 +193,6 @@ const Survey = () => {
                             name={`question_${index}`}
                             rows="3"
                             onChange={(e) => handleTextChange(question?._id, e.target.value)}
-                            required
                         ></textarea>
                         {errors[question?._id] && <p className="text-red-500">{errors[question?._id]}</p>}
 
