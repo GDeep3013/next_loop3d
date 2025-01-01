@@ -190,12 +190,14 @@ const Survey = () => {
                         {question.questionText}
                     </p>
                     <div className="survey-options mt-2">
-                        <textarea
-                            className="w-full p-2 border rounded-lg"
-                            name={`question_${index}`}
-                            rows="3"
-                            onChange={(e) => handleTextChange(question?._id, e.target.value)}
-                        ></textarea>
+                     
+                    <textarea
+                    className="w-full p-2 border rounded-lg"
+                    name={`question_${index}`}
+                    rows="3"
+                    onChange={(e) => handleTextChange(question?._id, e.target.value)}
+                    required={!question.questionText?.includes('Other comments?')}
+                    ></textarea>
                         {errors[question?._id] && <p className="text-red-500">{errors[question?._id]}</p>}
 
                     </div>
